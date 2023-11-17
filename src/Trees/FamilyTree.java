@@ -1,4 +1,4 @@
-package trees;
+package Trees;
 
 import java.util.*;
 import java.io.*;
@@ -52,7 +52,7 @@ public class FamilyTree
                 // If child.getNodeWithName(targetName) returns a non-null node,
                 // then that's the node we're looking for. Return it.
             	if (child.getNodeWithName(targetName) != null) {
-                    return this;
+                    return child;
             	}
             }
             
@@ -73,7 +73,7 @@ public class FamilyTree
             // recent to ancient. Expect a question about this on the final exam.
             TreeNode curr = this;
             	while (curr.parent != null) {
-            		ancestors.add(curr);
+            		ancestors.add(curr.parent);
             		curr = curr.parent;
             	}
             return ancestors;
@@ -140,8 +140,7 @@ public class FamilyTree
 			throw new TreeException("Line does not exist");
 		
 		String parent = line.substring(0, colonIndex); 
-				           
-		String childrenString = line.substring(colonIndex);
+		String childrenString = line.substring(colonIndex+1);
 		String[] childrenArray = childrenString.split(",");
 		
 		// Find parent node. If root is null then the tree is empty and the
@@ -159,10 +158,11 @@ public class FamilyTree
 		
 		// Add child nodes to parentNode.
 		//?? For each name in childrenArray, create a new node and add that node to parentNode.
-		for(String child: childrenArray) {
-			TreeNode children = new TreeNode(child);
-			parentNode.addChild(children);
+		for(int i = 0; i < childrenArray.length;i ++) {
+			TreeNode child = new TreeNode(childrenArray[i]);
+			parentNode.addChild(child);
 		}
+		
 	}
 	
 	
@@ -188,6 +188,8 @@ public class FamilyTree
 		
 		// Check members of ancestorsOf1 in order until you find a node that is also
 		// an ancestor of 2. 
+		
+		
 		for (TreeNode n1: ancestorsOf1)
 			if (ancestorsOf2.contains(n1))
 				return n1;

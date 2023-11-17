@@ -1,4 +1,4 @@
-package trees;
+package Trees;
 
 public class TreeException extends Exception
 {
